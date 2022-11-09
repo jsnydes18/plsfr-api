@@ -1,0 +1,35 @@
+{
+  "name": "playlister",
+  "version": "0.0.1",
+  "description": "Spotify Playlist Scraper",
+  "main": "index.js",
+  "author": "Justin Snyder",
+  "license": "ISC",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsnydes18/PlaylistThing.git"
+  },
+  "scripts": {
+    "lint": "eslint . --fix",
+    "start": "NODE_CONFIG_STRICT_MODE=1 node index.js",
+    "test": "jest --detectOpenHandles --coverage",
+    "dev": "NODE_APP_INSTANCE=dev NODE_ENV=local nodemon index.js",
+    "clean": "rm -rf ./bbuild ./node_modules"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "bunyan": "^1.8.15",
+    "config": "^3.3.8",
+    "cookie-parser": "^1.4.6",
+    "eslint": "^8.27.0",
+    "express": "^4.18.2",
+    "helmet": "^6.0.0",
+    "node-fetch": "^3.2.10",
+    "node-fetch-commonjs": "^3.2.4",
+    "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
+  }
+}
