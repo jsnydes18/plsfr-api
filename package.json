@@ -5,7 +5,7 @@
   "main": "index.js",
   "author": "Justin Snyder",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/jsnydes18/PlaylistThing.git"
@@ -14,8 +14,9 @@
     "lint": "eslint . --fix",
     "start": "NODE_CONFIG_STRICT_MODE=1 node index.js",
     "test": "jest --detectOpenHandles --coverage",
-    "dev": "NODE_APP_INSTANCE=dev NODE_ENV=local nodemon index.js",
-    "clean": "rm -rf ./bbuild ./node_modules"
+    "dev": "NODE_CONFIG_STRICT_MODE=1 NODE_APP_INSTANCE=int NODE_ENV=dev nodemon index.js",
+    "clean": "rm -rf ./build ./node_modules",
+    "working": "node working.js"
   },
   "dependencies": {
     "body-parser": "^1.20.1",
@@ -26,7 +27,6 @@
     "express": "^4.18.2",
     "helmet": "^6.0.0",
     "node-fetch": "^3.2.10",
-    "node-fetch-commonjs": "^3.2.4",
     "nodemon": "^2.0.20"
   },
   "devDependencies": {

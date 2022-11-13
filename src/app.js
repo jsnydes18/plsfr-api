@@ -1,22 +1,22 @@
-const express = require('express');
-const helmet = require('helmet');
 
-const bunyan = require('bunyan');
+import express from 'express';
+import helmet from 'helmet';
+
+import bunyan from 'bunyan';
 const log = bunyan.createLogger({name: "logger"});
 
-const cookieParser = require('cookier-parser');
-const bodyParser = require('body-parser')
-const loggingMiddleware = require('./middleware/logging')
+import bodyParser from 'body-parser';
+import { requestStart, requestComplete } from './middleware/logging.js'
 
-const config = require('config');
+import config from 'config';
 
 const app = express();
 
 const basePath = '/playlist';
 
-const spotify = require('./handlers/Spotify')
+import { spotify } from './handlers/spotify.js'
 
-app.use(helment({
+app.use(helmet({
   crossDomain: true,
   dnsPrefetchControl: true,
   frameguard: true,
@@ -36,10 +36,13 @@ app.use(
   })
 );
 
-app.use(cookieParser);
 app.use(bodyParser.json());
 
 app.use(`${basePath}/spotify`, spotify);
 
-app.use(loggingMiddleware.requestStart());
-app.use(loggingMiddleware.requestComplete())
+app.use(requestStart());
+app.use(requestComplete());
+
+export {
+  app
+};

@@ -1,0 +1,21 @@
+{
+  "playlists": {
+    "getPlaylist": {
+      "method":"get",
+      "url":"/playlists/{playlist_id}",
+      "query":[
+        "additional_types",
+        "fields",
+        "market"
+      ]
+    }
+  },
+  "search": {
+    "search": {
+     "method":"get",
+     "query":[
+      ""
+     ] 
+    }
+  }
+}

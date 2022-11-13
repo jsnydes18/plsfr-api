@@ -1,7 +1,7 @@
-const bunyan = require('bunyan');
+import bunyan from 'bunyan';
 const log = bunyan.createLogger({name: "mw"});
 
-exports.requestStart = () => (req, res, next) => {
+const requestStart = () => (req, res, next) => {
   req.log = log.child({
     requestPath: req.url,
     httpVerb: req.method,
@@ -11,7 +11,7 @@ exports.requestStart = () => (req, res, next) => {
   next();
 }
 
-exports.requestComplete = () => (req, res, next) => {
+const requestComplete = () => (req, res, next) => {
   const start = Date.now();
   res.on('finish', () => {
     req.log.info({
@@ -20,3 +20,8 @@ exports.requestComplete = () => (req, res, next) => {
   });
   next();
 };
+
+export {
+  requestStart,
+  requestComplete
+}

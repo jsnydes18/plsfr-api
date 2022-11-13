@@ -1,5 +1,6 @@
 # Swiper, No Swiping!
 config/local.json
+local/
 
 # Fatty Mods
 node_modules/
