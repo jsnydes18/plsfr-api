@@ -1,0 +1,37 @@
+{
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "extends": [
+        "airbnb",
+        "airbnb/hooks",
+        "plugin:prettier/recommended"
+    ],
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmafreatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+        "consistent-return": "off",
+        "no-unused-vars": "off",
+        "no-console": "off",
+        "no-continue": "off",
+        "global-require": "off",
+        "arrow-body-style": "off",
+        "max-classes-per-file": "off",
+        "import/extensions": "off"
+    },
+    "globals":{
+        "__dirname": true,
+        "expect": true,
+        "jest": true,
+        "afterAll": true,
+        "beforeAll": true
+    }
+}

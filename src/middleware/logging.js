@@ -1,5 +1,6 @@
-import bunyan from 'bunyan';
-const log = bunyan.createLogger({name: "mw"});
+import bunyan from "bunyan";
+
+const log = bunyan.createLogger({ name: "mw" });
 
 const requestStart = () => (req, res, next) => {
   req.log = log.child({
@@ -9,19 +10,16 @@ const requestStart = () => (req, res, next) => {
     headers: req.headers,
   });
   next();
-}
+};
 
 const requestComplete = () => (req, res, next) => {
   const start = Date.now();
-  res.on('finish', () => {
+  res.on("finish", () => {
     req.log.info({
       responseCode: res.statusCode,
-    },);
+    });
   });
   next();
 };
 
-export {
-  requestStart,
-  requestComplete
-}
+export { requestStart, requestComplete };

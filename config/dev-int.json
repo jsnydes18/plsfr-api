@@ -1,3 +1,8 @@
 {
-  "env":"dev"
+  "env":"dev",
+  "aws": {
+    "sqs": {
+      "queueUrl": "http://localhost:4566/000000000000/submitq"
+    }
+  }
 }

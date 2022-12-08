@@ -19,17 +19,23 @@
     "working": "node working.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.1267.0",
     "body-parser": "^1.20.1",
     "bunyan": "^1.8.15",
     "config": "^3.3.8",
     "cookie-parser": "^1.4.6",
-    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
     "express": "^4.18.2",
     "helmet": "^6.0.0",
     "node-fetch": "^3.2.10",
     "nodemon": "^2.0.20"
   },
   "devDependencies": {
+    "eslint": "^8.29.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "jest": "^29.3.1"
   }
 }
