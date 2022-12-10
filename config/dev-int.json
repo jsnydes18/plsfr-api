@@ -3,6 +3,11 @@
   "aws": {
     "sqs": {
       "queueUrl": "http://localhost:4566/000000000000/submitq"
+    },
+    "ddb": {
+      "tableName": "pullTable",
+      "partKey": "reqId",
+      "sortKey": "pageNum"
     }
   }
 }
