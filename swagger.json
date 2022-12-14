@@ -1,0 +1,268 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Playlist Surfer API",
+    "description": "This portion of the system will receive requests from the UI. These requests will contain the user's query. In reponse the UI will recieve a request ID (reqId). This reqId is then used to pull the results found for that query.\n\n1. Put request on /submit\n2. Get results from /pull\n3. NYI Repeat 2 until all results pulled\n\nPlaylist Surfer Worker will be churning through the querying, scraping, validation, and formating of the results.",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/plsfr"
+    }
+  ],
+  "tags": [
+    {
+      "name": "request",
+      "description": "Primary query request handlers"
+    },
+    {
+      "name": "mock",
+      "description": "Mocked Response Endpoints for Data Structure Sampling"
+    },
+    {
+      "name": "Spotify",
+      "description": "DEPRECATED - Legacy Endpoint for querying SpotifyApi"
+    }
+  ],
+  "paths": {
+    "/request/submit": {
+      "put": {
+        "tags": [
+          "request"
+        ],
+        "summary": "Submit Request",
+        "description": "Place User Request into Processing Queue",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/request/pull": {
+      "get": {
+        "tags": [
+          "request"
+        ],
+        "summary": "Pull Request Results",
+        "description": "Retrieve all available results for a given request ID",
+        "parameters": [
+          {
+            "name": "reqId",
+            "in": "query",
+            "description": "Request ID returned when request was submitted",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "End of Query; Results Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PullResponse"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "NYI Query In-Progress; Results Found"
+          },
+          "404": {
+            "description": "NYI End of Query; No Results Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/mock/submit": {
+      "put": {
+        "tags": [
+          "mock"
+        ],
+        "summary": "Submit Request - Mock",
+        "description": "Place User Request into Processing Queue",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/mock/pull": {
+      "get": {
+        "tags": [
+          "mock"
+        ],
+        "summary": "Pull Request Results - Mock",
+        "description": "Retrieve all available results for a given request ID",
+        "parameters": [
+          {
+            "name": "reqId",
+            "in": "query",
+            "description": "Request ID returned when request was submitted",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "End of Query; Results Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PullResponse"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "NYI Query In-Progress; Results Found"
+          },
+          "404": {
+            "description": "NYI End of Query; No Results Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SubmitRequest": {
+        "type": "object",
+        "required": [
+          "input"
+        ],
+        "properties": {
+          "input": {
+            "type": "string",
+            "example": "anime"
+          }
+        }
+      },
+      "SubmitResponse": {
+        "type": "object",
+        "required": [
+          "reqId"
+        ],
+        "properties": {
+          "reqId": {
+            "type": "string",
+            "example": "6ab3b435-29b9-4480-b5ef-5ba4678efdd6"
+          }
+        }
+      },
+      "PullResponse": {
+        "type": "object",
+        "required": [
+          "reqId",
+          "results"
+        ],
+        "properties": {
+          "reqId": {
+            "type": "string",
+            "example": "6ab3b435-29b9-4480-b5ef-5ba4678efdd6"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Playlist"
+            }
+          }
+        }
+      },
+      "Playlist": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "followers": {
+            "type": "integer"
+          },
+          "tracks": {
+            "type": "integer"
+          },
+          "popularity": {
+            "type": "number",
+            "format": "float"
+          },
+          "lastModified": {
+            "type": "string"
+          },
+          "ownerDetails": {
+            "type": "object",
+            "properties": {
+              "spotify": {
+                "type": "string"
+              },
+              "instagram": {
+                "type": "string"
+              },
+              "twitter": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

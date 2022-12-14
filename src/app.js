@@ -5,11 +5,12 @@ import bunyan from "bunyan";
 
 import bodyParser from "body-parser";
 import config from "config";
-import { requestStart, requestComplete } from "./middleware/logging.js";
 
+import { requestStart, requestComplete } from "./middleware/logging.js";
 import spotify from "./handlers/spotify.js";
 import request from "./handlers/request.js";
 import mock from "./handlers/mock.js";
+import swagger from "./handlers/swagger.cjs";
 
 const log = bunyan.createLogger({ name: "logger" });
 
@@ -44,6 +45,7 @@ app.use(bodyParser.json());
 app.use(`${basePath}/spotify`, spotify);
 app.use(`${basePath}/request`, request);
 app.use(`${basePath}/mock`, mock);
+app.use(`${basePath}/doc`, swagger);
 
 app.use(requestStart());
 app.use(requestComplete());

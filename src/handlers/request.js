@@ -42,6 +42,7 @@ queue.get("/pull", async (req, res) => {
   }
 
   return res.status(config.code.success).send({
+    reqId,
     results,
   });
 });
