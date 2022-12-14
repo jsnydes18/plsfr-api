@@ -18,12 +18,11 @@ queue.get("/", (req, res) => {
 
 queue.put("/submit", async (req, res) => {
   const { input } = req.body;
-  
   const reqId = await submitRequest(input);
 
   return res.status(200).send({
-    reqId
-  })
+    reqId,
+  });
 });
 
 queue.get("/pull", async (req, res) => {
@@ -31,8 +30,8 @@ queue.get("/pull", async (req, res) => {
   const results = await pullResults(reqId);
 
   return res.status(200).send({
-    results
-  })
+    results,
+  });
 });
 
 export default queue;

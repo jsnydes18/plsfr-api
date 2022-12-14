@@ -14,7 +14,7 @@ const log = bunyan.createLogger({ name: "logger" });
 
 const app = express();
 
-const basePath = "/cxp";
+const basePath = "/plsfr";
 
 app.use(
   helmet({
