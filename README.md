@@ -28,5 +28,5 @@ npm run dev
 TODO
 
 # API Documentation
-Refer to swagger at `/plsfr/doc` after you start the dev server
-- Ex. http://localhost:8080/plsfr/doc
+Refer to swagger at `/plsfr/` after you start the dev server
+- Ex. http://localhost:8080/plsfr/
