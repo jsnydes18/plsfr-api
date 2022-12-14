@@ -2,8 +2,8 @@ import express from "express";
 
 import os from "os";
 import bunyan from "bunyan";
-import { v4 as uuidv4 } from "uuid";
-import submitRequest from "../bin/submitRequest.js"
+import config from "config";
+import submitRequest from "../bin/submitRequest.js";
 import pullResults from "../bin/pullResults.js";
 
 const log = bunyan.createLogger({ name: "queue-handler" });
@@ -18,18 +18,30 @@ queue.get("/", (req, res) => {
 
 queue.put("/submit", async (req, res) => {
   const { input } = req.body;
-  const reqId = await submitRequest(input);
+  let reqId;
+  try {
+    reqId = await submitRequest(input);
+  } catch (e) {
+    log.error(e);
+    return res.status(config.code.intError).send(config.msg.intError);
+  }
 
-  return res.status(200).send({
+  return res.status(config.code.success).send({
     reqId,
   });
 });
 
 queue.get("/pull", async (req, res) => {
   const { reqId } = req.query;
-  const results = await pullResults(reqId);
+  let results;
+  try {
+    results = await pullResults(reqId);
+  } catch (e) {
+    log.error(e);
+    return res.status(config.code.intError).send(config.msg.intError);
+  }
 
-  return res.status(200).send({
+  return res.status(config.code.success).send({
     results,
   });
 });

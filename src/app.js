@@ -8,7 +8,8 @@ import config from "config";
 import { requestStart, requestComplete } from "./middleware/logging.js";
 
 import spotify from "./handlers/spotify.js";
-import queue from "./handlers/queue.js";
+import request from "./handlers/request.js";
+import mock from "./handlers/mock.js";
 
 const log = bunyan.createLogger({ name: "logger" });
 
@@ -41,7 +42,8 @@ app.use(
 app.use(bodyParser.json());
 
 app.use(`${basePath}/spotify`, spotify);
-app.use(`${basePath}/queue`, queue);
+app.use(`${basePath}/request`, request);
+app.use(`${basePath}/mock`, mock);
 
 app.use(requestStart());
 app.use(requestComplete());
